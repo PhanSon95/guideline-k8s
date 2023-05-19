@@ -1,0 +1,30 @@
+all:
+  hosts:
+    k8s1:
+      ansible_host: 38.242.213.229
+      ip: 38.242.213.229
+      access_ip: 38.242.213.229
+      ansible_user: root
+    k8s2:
+      ansible_host: 173.249.60.41
+      ip: 173.249.60.41
+      access_ip: 173.249.60.41
+      ansible_user: root
+  children:
+    kube_control_plane:
+      hosts:
+        k8s1:
+        k8s2:
+    kube_node:
+      hosts:
+        k8s1:
+        k8s2:
+    etcd:
+      hosts:
+        k8s1:
+    k8s_cluster:
+      children:
+        kube_control_plane:
+        kube_node:
+    calico_rr:
+      hosts: {}
